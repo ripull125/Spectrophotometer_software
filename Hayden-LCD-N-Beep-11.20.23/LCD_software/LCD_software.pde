@@ -6,6 +6,19 @@
 
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
+char hexaKeys[ROWS][COLS] = {
+  {'1', '2', '3', 'A'},
+  {'4', '5', '6', 'B'},
+  {'7', '8', '9', 'C'},
+  {'*', '0', '#', 'D'}
+};
+
+
+byte rowPins[ROWS] = {9, 8, 7, 6}; 
+byte colPins[COLS] = {5, 4, 3, 2}; 
+
+Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
+
 void setup() {
  Serial.begin(9600); 
   pinMode(2,OUTPUT); 
@@ -38,6 +51,14 @@ int sw[16];
 
 void loop()
 {
+    lcd.init();                      // initialize the lcd 
+  lcd.init();
+  // Print a message to the LCD.
+  lcd.backlight();
+  lcd.setCursor(0,0);
+    lcd.println("Welcome to the RGB Spectrophotometer!  ");
+    lcd.setCursor(0, 1);)
+    lcd.println("Please enter the Dilution factor:")
   int n = 15; // number of things to test
   float sigxR = 0, sigxyR = 0, sigyR = 0, sigy2R= 0, sigx2R = 0;
   for(int i = n; i >= 1; i--){
@@ -106,12 +127,8 @@ R2 = max(max(R2R, R2G), max(R2B, R2W)); // highest R2
 
 
 
-  lcd.init();                      // initialize the lcd 
-  lcd.init();
-  // Print a message to the LCD.
-  lcd.backlight();
-  lcd.setCursor(2,0);
- 
+
+   lcd.setCursor(2,0);
   lcd.print("a = " + AR);
   lcd.setCursor(2,1);
 digitalWrite (7, HIGH);
