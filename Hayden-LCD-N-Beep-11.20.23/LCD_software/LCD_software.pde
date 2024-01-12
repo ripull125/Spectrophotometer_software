@@ -58,12 +58,14 @@ void loop()
   // Print a message to the LCD.
   lcd.backlight();
   lcd.setCursor(0,0);
-    lcd.println("RGB Spectrophotometr");
+    lcd.print("RGB Spectrophotometr");
     lcd.setCursor(0, 1);
-    // lcd.println("Please enter the Dilution factor(press * when done):");
+    lcd.print("Enter DF(n/1000): ");
     char customKey = customKeypad.getKey();   // Gets input from keypad
-    lcd.setCursor(0, 2); 
-    lcd.print(customKey);
+    lcd.setCursor(0, 19);
+    if (customKey){
+      lcd.print(customKey);
+    }
 
 //   int n = 15; // number of things to test
 //   float sigxR = 0, sigxyR = 0, sigyR = 0, sigy2R= 0, sigx2R = 0;
