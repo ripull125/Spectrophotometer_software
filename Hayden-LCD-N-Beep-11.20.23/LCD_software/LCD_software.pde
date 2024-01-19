@@ -29,10 +29,7 @@ void setup() {
   pinMode(4,OUTPUT); 
   pinMode(7,OUTPUT);
 
-int sr[16];
-int sg[16];
-int sb[16];
-int sw[16];
+
 
   // for(int i = 0; i < 6; i++){
   //   setColor(255, 0, 0); // LED color to RED
@@ -61,26 +58,39 @@ void loop()
     lcd.print("RGB Spectrophotometr");
     lcd.setCursor(0, 1);
     lcd.print("Enter DF(n/1000): ");
-    char customKey = customKeypad.getKey();   // Gets input from keypad
-    lcd.setCursor(0, 19);
-    if (customKey){
-      lcd.print(customKey);
+
+    int dil_fac = 0, num_dec = 2;
+    for(int i = 1; i <= num_dec; i++){
+      char customKey = customKeypad.getKey();   // Gets input from keypad
+
+      if (customKey){
+        dil_fac += (int)(customKey)/pow(10, i );
+      }
     }
 
-//   int n = 15; // number of things to test
-//   float sigxR = 0, sigxyR = 0, sigyR = 0, sigy2R= 0, sigx2R = 0;
-//   for(int i = n; i >= 1; i--){
-//     sigxR += i;
-//     sigx2R += i*i;
-//     sigxyR += sr[i-1] * i;
-//     sigyR += sr[i-1];
-//     sigy2R += sr[i-1]*sr[i-1];
-//   }
+// INITIALIZE COLOR ARRAYS
+int sr[16];
+int sg[16];
+int sb[16];
+int sw[16];
 
-//   float AR = (sigyR*sigx2R-sigxR*sigxyR)/(n*sigx2R-sigxR*sigxR);
-// //((n*sigxy - sigx*sigy)/sqrt((n*sigx2-sigx*sigx)*(n*sigy2-sigy*sigy)))
-//   float BR = (n*sigxyR-sigxR*sigyR)/(n*sigx2R-sigxR*sigxR);
-//   float R2R = ((n*sigxyR - sigxR*sigyR)/sqrt((n*sigx2R-sigxR*sigxR)*(n*sigy2R-sigyR*sigyR))) * ((n*sigxyR - sigxR*sigyR)/sqrt((n*sigx2R-sigxR*sigxR)*(n*sigy2R-sigyR*sigyR)));
+
+
+    lcd.setCursor(0, 19);
+  int n = 15; // number of things to test
+  float sigxR = 0, sigxyR = 0, sigyR = 0, sigy2R= 0, sigx2R = 0;
+  for(int i = n; i >= 1; i--){
+    sigxR += i;
+    sigx2R += i*i;
+    sigxyR += sr[i-1] * i;
+    sigyR += sr[i-1];
+    sigy2R += sr[i-1]*sr[i-1];
+  }
+
+  float AR = (sigyR*sigx2R-sigxR*sigxyR)/(n*sigx2R-sigxR*sigxR);
+//((n*sigxy - sigx*sigy)/sqrt((n*sigx2-sigx*sigx)*(n*sigy2-sigy*sigy)))
+  float BR = (n*sigxyR-sigxR*sigyR)/(n*sigx2R-sigxR*sigxR);
+  float R2R = ((n*sigxyR - sigxR*sigyR)/sqrt((n*sigx2R-sigxR*sigxR)*(n*sigy2R-sigyR*sigyR))) * ((n*sigxyR - sigxR*sigyR)/sqrt((n*sigx2R-sigxR*sigxR)*(n*sigy2R-sigyR*sigyR)));
 
 
 //   float sigxG = 0, sigx2G = 0, sigxyG = 0, sigyG = 0, sigy2G= 0;
