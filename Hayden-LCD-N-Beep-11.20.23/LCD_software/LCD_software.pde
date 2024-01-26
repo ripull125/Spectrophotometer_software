@@ -59,6 +59,7 @@ void loop()
     lcd.setCursor(0, 1);
     lcd.print("Enter DF(n/1000): ");
 
+    lcd.setCursor(0, 2);
     int dil_fac = 0, num_dec = 2;
     for(int i = 1; i <= num_dec; i++){
       char customKey = customKeypad.getKey();   // Gets input from keypad
@@ -66,6 +67,7 @@ void loop()
       if (customKey){
         dil_fac += (int)(customKey)/pow(10, i );
       }
+      lcd.print((String)(customKey));
     }
 
 // INITIALIZE COLOR ARRAYS
